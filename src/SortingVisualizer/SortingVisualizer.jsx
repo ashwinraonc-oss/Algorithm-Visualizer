@@ -1,6 +1,5 @@
 import React from "react";
 import "./SortingVisualizer.css";
-
 export default class SortingVisualizer extends React.Component {
     constructor(props){
         super(props);
@@ -20,10 +19,33 @@ export default class SortingVisualizer extends React.Component {
         }
         this.setState({array});
     }
+    runSort(){
+        switch (this.state.algorithm){
+            case "merge": this.mergeSort(); break;
+            case "bubble": this.bubbleSort(); break;
+            case "heap": this.heapSort(); break;
+            case "quick": this.quickSort(); break;
+        }
+    }
+
+    mergeSort(){
+
+
+    }
+    quickSort(){
+
+    }
+    heapSort(){
+
+    }
+    bubbleSort(){
+
+    }
 
     render(){
         const{array} = this.state;
         return(
+            <>
             <div className = "array-container">
                 {array.map((value, idx) => (
                     <div 
@@ -32,10 +54,20 @@ export default class SortingVisualizer extends React.Component {
                         style = {{height: `${value}px`}}
                     ></div>
                 ))}
-            
-            
             </div>
-        )
+
+            <button onClick={() => this.resetArray()}>New Array</button>
+            <select onChange={(e) => this.setState({algorithm: e.target.value})}>
+                <option value = "merge">Merge Sort</option>
+                <option value = "bubble">Bubble Sort</option>
+                <option value = "heap">Heap Sort</option>
+                <option value = "quick">Quick Sort</option>
+
+
+            </select>
+
+            <button onClick={() => this.runSort()}>Sort</button>
+        </>)
     }
 }
     function randomIntFromInterval(min, max) {
