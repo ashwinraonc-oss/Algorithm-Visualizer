@@ -1,0 +1,10 @@
+.array-bar {
+    margin: 0 2px;
+    width: 8px;
+    background-color: turquoise
+}
+.array-container{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end
+}
