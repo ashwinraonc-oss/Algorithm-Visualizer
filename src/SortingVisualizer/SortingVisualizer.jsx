@@ -21,24 +21,49 @@ export default class SortingVisualizer extends React.Component {
     }
     runSort(){
         switch (this.state.algorithm){
-            case "merge": this.mergeSort(); break;
-            case "bubble": this.bubbleSort(); break;
-            case "heap": this.heapSort(); break;
-            case "quick": this.quickSort(); break;
+            case "merge": this.mergeSort(this.state.array); break;
+            case "bubble": this.bubbleSort(this.state.array); break;
+            case "heap": this.heapSort(this.state.array); break;
+            case "quick": this.quickSort(this.state.array); break;
         }
     }
 
-    mergeSort(){
+    mergeSort(arr){
+        //base case
+        if (arr.length <= 1) return arr;
+        let mid = Math.floor(arr.length/2);
+        let left = this.mergeSort(arr.slice(0, mid))
+        let right = this.mergeSort(arr.slice(mid))
+
+        return this.merge(left, right);
 
 
     }
+
+    merge(left, right){
+        let sortedArr =  []
+        while (left.length && right.length){
+            if(left[0] < right[0]){
+                sortedArr.push(left.shift())
+            } else {
+                sortedArr.push(right.shift())
+            }
+        }
+        return [...sortedArr, ...left, ...right]
+
+    }
+
+
     quickSort(){
+        return
 
     }
     heapSort(){
+        return
 
     }
     bubbleSort(){
+        return
 
     }
 

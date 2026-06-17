@@ -1,7 +1,7 @@
 .array-bar {
     margin: 0 1px;
     width: 8px;
-    background-color: turquoise
+    background-color: rgb(227, 184, 233)
 }
 .array-container{
     display: flex;
