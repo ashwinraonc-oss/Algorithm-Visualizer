@@ -1,10 +1,10 @@
 .array-bar {
     margin: 0 1px;
-    width: 8px;
-    background-color: rgb(227, 184, 233)
+    width: 15px;
+    background-color: rgb(0, 0, 0)
 }
 .array-container{
     display: flex;
     flex-direction: row;
-    align-items: flex-end
+    align-items: flex-end;
 }

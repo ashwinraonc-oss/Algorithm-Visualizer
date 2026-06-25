@@ -1,10 +1,13 @@
 import React from "react";
 import "./SortingVisualizer.css";
+import {mergeSort, bubbleSort, heapSort, quickSort} from "./sortingAlgos"
 export default class SortingVisualizer extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             array: [],
+            algorithm: 'merge',
+            comparing: [],
         };
     }
 
@@ -21,54 +24,36 @@ export default class SortingVisualizer extends React.Component {
     }
     runSort(){
         switch (this.state.algorithm){
-            case "merge": this.mergeSort(this.state.array); break;
-            case "bubble": this.bubbleSort(this.state.array); break;
-            case "heap": this.heapSort(this.state.array); break;
-            case "quick": this.quickSort(this.state.array); break;
+            case "merge": {
+                const sorted = mergeSort(this.state.array); 
+                console.log(sorted); 
+                break;}
+            case "bubble": {
+                const sorted = this.animateBubble(bubbleSort(this.state.array)); 
+                console.log(sorted); 
+                break;}
+            case "heap": heapSort(this.state.array); break;
+            case "quick": quickSort(this.state.array); break;
         }
     }
-
-    mergeSort(arr){
-        //base case
-        if (arr.length <= 1) return arr;
-        let mid = Math.floor(arr.length/2);
-        let left = this.mergeSort(arr.slice(0, mid))
-        let right = this.mergeSort(arr.slice(mid))
-
-        return this.merge(left, right);
-
-
-    }
-
-    merge(left, right){
-        let sortedArr =  []
-        while (left.length && right.length){
-            if(left[0] < right[0]){
-                sortedArr.push(left.shift())
-            } else {
-                sortedArr.push(right.shift())
-            }
-        }
-        return [...sortedArr, ...left, ...right]
-
-    }
-
-
-    quickSort(){
-        return
-
-    }
-    heapSort(){
-        return
-
-    }
-    bubbleSort(){
-        return
-
+    animateBubble(swap_arr){
+        const speed = 3
+        swap_arr.forEach(([i,j], index) => {
+            setTimeout(() => {
+                this.setState((prev) => {
+                    const array = [...prev.array]; //... copies the array instead of referring to the same array. NEVER mutate the state directly.
+                    [array[i], array[j]] = [array[j], array[i]];
+                    return { array, comparing: [i,j] };
+                });
+                
+            }, index*speed);
+           
+        });
+        setTimeout(() => this.setState({comparing: []}), swap_arr.length * speed);
     }
 
     render(){
-        const{array} = this.state;
+        const{array, comparing} = this.state;
         return(
             <>
             <div className = "array-container">
@@ -76,7 +61,10 @@ export default class SortingVisualizer extends React.Component {
                     <div 
                         className = "array-bar" 
                         key = {idx} 
-                        style = {{height: `${value}px`}}
+                        style = {{
+                            height: `${value}px`,
+                            backgroundColor: comparing.includes(idx) ? "tan":"turquoise",
+                        }}
                     ></div>
                 ))}
             </div>
@@ -98,4 +86,5 @@ export default class SortingVisualizer extends React.Component {
     function randomIntFromInterval(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
+
 
