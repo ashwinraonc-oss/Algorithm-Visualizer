@@ -25,6 +25,7 @@ export function mergeSort(arr){
     }
 
     export function bubbleSort(arr){
+        const startTime = performance.now()
         let flag = true
         const arr_copy = [...arr]
         let animation_arr = []
@@ -40,6 +41,8 @@ export function mergeSort(arr){
                 }
             }
         }
+        const endTime = performance.now()
+        console.log(`Bubble Sort took ${endTime - startTime} ms`)
         return (animation_arr)
         }
     export function quickSort(){

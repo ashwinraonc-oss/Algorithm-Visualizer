@@ -16,11 +16,12 @@ export default class SortingVisualizer extends React.Component {
     }
 
     resetArray(){
-        const array = []
-        for (let i = 0; i < 100; i++){
-            array.push(randomIntFromInterval(5, 500));
-        }
-        this.setState({array});
+        // const array = []
+        // for (let i = 0; i < 50; i++){
+        //     array.push(randomIntFromInterval(5, 500));
+        // }
+        // this.setState({array});
+        this.setState({array: generateRandomArray(), comparing: []});
     }
     runSort(){
         switch (this.state.algorithm){
@@ -29,15 +30,18 @@ export default class SortingVisualizer extends React.Component {
                 console.log(sorted); 
                 break;}
             case "bubble": {
-                const sorted = this.animateBubble(bubbleSort(this.state.array)); 
-                console.log(sorted); 
+                // const sorted = this.animateBubble(bubbleSort(this.state.array)); 
+                // console.log(sorted);
+                const newArr = generateRandomArray();
+                this.setState({array: newArr, comparing: []});
+                this.animateBubble(bubbleSort(newArr));
                 break;}
             case "heap": heapSort(this.state.array); break;
             case "quick": quickSort(this.state.array); break;
         }
     }
     animateBubble(swap_arr){
-        const speed = 3
+        const speed = 4
         swap_arr.forEach(([i,j], index) => {
             setTimeout(() => {
                 this.setState((prev) => {
@@ -63,11 +67,13 @@ export default class SortingVisualizer extends React.Component {
                         key = {idx} 
                         style = {{
                             height: `${value}px`,
-                            backgroundColor: comparing.includes(idx) ? "tan":"turquoise",
+                            backgroundColor: comparing.includes(idx) ? "orange":"turquoise",
                         }}
                     ></div>
                 ))}
             </div>
+
+            <div className = "buttons">
 
             <button onClick={() => this.resetArray()}>New Array</button>
             <select onChange={(e) => this.setState({algorithm: e.target.value})}>
@@ -80,11 +86,21 @@ export default class SortingVisualizer extends React.Component {
             </select>
 
             <button onClick={() => this.runSort()}>Sort</button>
+            
+            </div>
         </>)
     }
 }
     function randomIntFromInterval(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+    function generateRandomArray(size = 50, min = 5, max = 500){
+        const local_array = [];
+        for (let i = 0; i < size; i++){
+            local_array.push(randomIntFromInterval(min, max));
+        }
+        return local_array;
+
     }
 
 
