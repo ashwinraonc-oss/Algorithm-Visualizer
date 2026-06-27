@@ -27,7 +27,7 @@ export function mergeSort(arr){
     export function bubbleSort(arr){
         const startTime = performance.now()
         let flag = true
-        const arr_copy = [...arr]
+        let arr_copy = [...arr]
         let animation_arr = []
         while (flag == true){
             flag = false
@@ -36,7 +36,7 @@ export function mergeSort(arr){
                     let temp = arr_copy[i]
                     arr_copy[i] = arr_copy[i - 1]
                     arr_copy[i - 1] = temp
-                    animation_arr.push([i, i-1])
+                    animation_arr.push([i, i-1]);
                     flag = true
                 }
             }
@@ -45,10 +45,41 @@ export function mergeSort(arr){
         console.log(`Bubble Sort took ${endTime - startTime} ms`)
         return (animation_arr)
         }
-    export function quickSort(){
-        return
+    export function quickSort(arr, low = 0, high = arr.length - 1, animation = []){
+        let arr_copy = [...arr]
+        if (low < high){
+            let pivot = partition(arr_copy, low, high, animation)
+            quickSort(arr_copy, low, pivot - 1, animation)
+            quickSort(arr_copy, pivot + 1, high, animation)
 
         }
+        //return arr
+
+        return animation
+    }
+    function partition(arr, low, high, animation){
+        let left = low
+        let right = high - 1
+        let pivot = arr[high]
+        while (left < right){
+            while (arr[left] < pivot && left < high){
+                left += 1
+            }
+            while (arr[right] >= pivot && right > low){
+                right -= 1
+            }
+            if (left < right){
+                [arr[left], arr[right]] = [arr[right], arr[left]];
+                animation.push([left, right, high]);
+            }
+        }
+        if (arr[left] > pivot){
+            [arr[left], arr[high]] = [arr[high], arr[left]];
+            animation.push([left, high, high]);
+        }
+        return left
+
+    }
     export function heapSort(){
         return
 

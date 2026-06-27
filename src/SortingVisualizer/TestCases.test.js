@@ -1,4 +1,4 @@
-import { mergeSort, bubbleSort } from "./sortingAlgos";
+import { mergeSort, bubbleSort, quickSort } from "./sortingAlgos";
 
 //File to make sure sorting algorithm logic is correct before implementing animations
 
@@ -99,5 +99,71 @@ describe("bubbleSort", () => {
         );
         const expected = [...arr].sort((a, b) => a - b);
         expect(bubbleSort(arr)).toEqual(expected);
+    });
+});
+
+describe("quickSort", () => {
+    // helper: quickSort sorts in place over arr[low..high] and returns arr
+    const sort = (arr) => quickSort(arr, 0, arr.length - 1);
+
+    // Edge case: empty array
+    test("empty array", () => {
+        expect(sort([])).toEqual([]);
+    });
+
+    // Edge case: single value
+    test("single element", () => {
+        expect(sort([42])).toEqual([42]);
+    });
+
+    test("two elements out of order", () => {
+        expect(sort([2, 1])).toEqual([1, 2]);
+    });
+
+    test("two elements already in order", () => {
+        expect(sort([1, 2])).toEqual([1, 2]);
+    });
+
+    // Normal array
+    test("unsorted array", () => {
+        expect(sort([5, 2, 8, 1, 9, 3])).toEqual([1, 2, 3, 5, 8, 9]);
+    });
+
+    test("already sorted array", () => {
+        expect(sort([1, 2, 3, 4, 5])).toEqual([1, 2, 3, 4, 5]);
+    });
+
+    test("reverse sorted array", () => {
+        expect(sort([5, 4, 3, 2, 1])).toEqual([1, 2, 3, 4, 5]);
+    });
+
+    // Edge case: duplicate values
+    test("array with duplicates", () => {
+        expect(sort([3, 1, 2, 3, 1, 2])).toEqual([1, 1, 2, 2, 3, 3]);
+    });
+
+    // Edge case: all identical values
+    test("all identical elements", () => {
+        expect(sort([7, 7, 7, 7])).toEqual([7, 7, 7, 7]);
+    });
+
+    test("array with negative numbers", () => {
+        expect(sort([-3, 5, -1, 0, 2, -8])).toEqual([-8, -3, -1, 0, 2, 5]);
+    });
+
+    test("pivot (last element) is the smallest value", () => {
+        expect(sort([4, 5, 6, 1])).toEqual([1, 4, 5, 6]);
+    });
+
+    test("pivot (last element) is the largest value", () => {
+        expect(sort([4, 1, 3, 9])).toEqual([1, 3, 4, 9]);
+    });
+
+    test("matches native sort on a large random array", () => {
+        const arr = Array.from({ length: 1000 }, () =>
+            Math.floor(Math.random() * 2000) - 1000
+        );
+        const expected = [...arr].sort((a, b) => a - b);
+        expect(sort(arr)).toEqual(expected);
     });
 });
