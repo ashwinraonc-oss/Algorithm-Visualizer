@@ -1,5 +1,5 @@
 
-export function mergeSort(arr){
+    export function mergeSort(arr){
         //base case
         if (arr.length <= 1) return arr;
         let mid = Math.floor(arr.length/2);
@@ -78,6 +78,23 @@ export function mergeSort(arr){
             animation.push([left, high, high]);
         }
         return left
+
+    }
+    export function selectionSort(arr){
+        let anime_arr = [];
+        let arr_copy = [...arr]
+        
+        for (let i = 0; i < arr_copy.length - 1; i++){
+            let min_idx = i;
+            for (let j = i + 1; j < arr_copy.length; j++){
+                if (arr_copy[j] < arr_copy[min_idx]){
+                    min_idx = j
+                }
+            }
+            [arr_copy[i], arr_copy[min_idx]] = [arr_copy[min_idx], arr_copy[i]];
+            anime_arr.push([i, min_idx]);
+        }
+        return anime_arr
 
     }
     export function heapSort(){
