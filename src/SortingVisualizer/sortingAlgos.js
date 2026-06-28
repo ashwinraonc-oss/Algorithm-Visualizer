@@ -25,7 +25,6 @@
     }
 
     export function bubbleSort(arr){
-        const startTime = performance.now()
         let flag = true
         let arr_copy = [...arr]
         let animation_arr = []
@@ -41,8 +40,6 @@
                 }
             }
         }
-        const endTime = performance.now()
-        console.log(`Bubble Sort took ${endTime - startTime} ms`)
         return (animation_arr)
         }
     export function quickSort(arr, low = 0, high = arr.length - 1, animation = []){
@@ -80,7 +77,6 @@
 
     }
     export function selectionSort(arr){
-        const startTime = performance.now()
         let anime_arr = [];
         let arr_copy = [...arr]
         
@@ -94,12 +90,49 @@
             [arr_copy[i], arr_copy[min_idx]] = [arr_copy[min_idx], arr_copy[i]];
             anime_arr.push([i, min_idx]);
         }
-        const endTime = performance.now()
-        console.log(`Selection Sort took ${endTime - startTime} ms`)
         return anime_arr
 
     }
-    export function heapSort(){
-        return
 
+
+    export function heapSort(arr, animation_arr = []){
+        let arr_copy = [...arr]
+        build_heap(arr_copy, animation_arr)
+        for (let i = arr_copy.length - 1; i > 0; i-- ){
+            [arr_copy[0], arr_copy[i]] = [arr_copy[i], arr_copy[0]]
+            animation_arr.push([0,i])
+            max_heapify(arr_copy, 0, i, animation_arr)
         }
+        return animation_arr
+
+
+    }
+    
+    function build_heap(arr_copy, animation_arr){
+        let n = arr_copy.length
+        for (let i = Math.trunc(n/2) - 1; i >= 0; i--){
+            max_heapify(arr_copy, i, n, animation_arr)
+        }
+        return arr_copy
+
+    }
+    function max_heapify(arr_copy, index, n, animation_arr){
+        let largest = index
+        let left = 2*index + 1
+        let right = 2*index + 2
+
+        if(left < n && arr_copy[left] > arr_copy[index]){
+            largest = left
+        }
+        if (right < n && arr_copy[right] > arr_copy[largest]){
+            largest = right
+        }
+        if (largest != index){
+            [arr_copy[index], arr_copy[largest]] = [arr_copy[largest], arr_copy[index]];
+            animation_arr.push([index, largest])
+            max_heapify(arr_copy, largest, n, animation_arr)
+        }
+
+
+
+    }

@@ -1,4 +1,4 @@
-import { mergeSort, bubbleSort, quickSort } from "./sortingAlgos";
+import { mergeSort, bubbleSort, quickSort, heapSort } from "./sortingAlgos";
 
 //File to make sure sorting algorithm logic is correct before implementing animations
 
@@ -165,5 +165,73 @@ describe("quickSort", () => {
         );
         const expected = [...arr].sort((a, b) => a - b);
         expect(sort(arr)).toEqual(expected);
+    });
+});
+
+describe("heapSort", () => {
+    // heapSort returns the sorted array (arr_copy), like mergeSort
+
+    // Edge case: empty array
+    test("empty array", () => {
+        expect(heapSort([])).toEqual([]);
+    });
+
+    // Edge case: single value
+    test("single element", () => {
+        expect(heapSort([42])).toEqual([42]);
+    });
+
+    test("two elements out of order", () => {
+        expect(heapSort([2, 1])).toEqual([1, 2]);
+    });
+
+    test("two elements already in order", () => {
+        expect(heapSort([1, 2])).toEqual([1, 2]);
+    });
+
+    test("three elements", () => {
+        expect(heapSort([3, 1, 2])).toEqual([1, 2, 3]);
+    });
+
+    // Normal array
+    test("unsorted array", () => {
+        expect(heapSort([5, 2, 8, 1, 9, 3])).toEqual([1, 2, 3, 5, 8, 9]);
+    });
+
+    test("already sorted array", () => {
+        expect(heapSort([1, 2, 3, 4, 5])).toEqual([1, 2, 3, 4, 5]);
+    });
+
+    test("reverse sorted array", () => {
+        expect(heapSort([5, 4, 3, 2, 1])).toEqual([1, 2, 3, 4, 5]);
+    });
+
+    // Edge case: duplicate values
+    test("array with duplicates", () => {
+        expect(heapSort([3, 1, 2, 3, 1, 2])).toEqual([1, 1, 2, 2, 3, 3]);
+    });
+
+    // Edge case: all identical values
+    test("all identical elements", () => {
+        expect(heapSort([7, 7, 7, 7])).toEqual([7, 7, 7, 7]);
+    });
+
+    test("array with negative numbers", () => {
+        expect(heapSort([-3, 5, -1, 0, 2, -8])).toEqual([-8, -3, -1, 0, 2, 5]);
+    });
+
+    test("does not mutate the original array", () => {
+        const original = [4, 2, 5, 1, 3];
+        const copy = [...original];
+        heapSort(original);
+        expect(original).toEqual(copy);
+    });
+
+    test("matches native sort on a large random array", () => {
+        const arr = Array.from({ length: 1000 }, () =>
+            Math.floor(Math.random() * 2000) - 1000
+        );
+        const expected = [...arr].sort((a, b) => a - b);
+        expect(heapSort(arr)).toEqual(expected);
     });
 });

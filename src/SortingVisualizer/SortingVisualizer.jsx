@@ -33,7 +33,7 @@ export default class SortingVisualizer extends React.Component {
         switch (this.state.algorithm){
             case "merge": {
                 const newArr = this.state.array
-                this.setState({array: newArr, comparing: [], sorted: [], pivot: null, ifSorted: true});
+                this.setState({array: newArr, comparing: [], sorted: [], pivot: null});
 
                 const startTime = performance.now()
                 const sorted_arr = mergeSort(newArr)
@@ -80,18 +80,25 @@ export default class SortingVisualizer extends React.Component {
                 console.log(`Selection Sort took ${endTime - startTime} ms`)
 
                 this.animateSelection(sorted_arr, 30);
-                //console.log(`Sorted!`)
                 break;
             }
 
-            case "heap": heapSort(this.state.array); break;
+            case "heap":{ 
+                const newArr = this.state.array
+                this.setState({array: newArr, comparing: [], sorted: [], pivot: null});
+                
+                const startTime = performance.now()
+                const sorted_arr = heapSort(newArr)
+                const endTime = performance.now()
+                console.log(`Heap Sort took ${endTime - startTime} ms`)
+
+                this.animateHeap(sorted_arr, 10);
+                break;                
+            }
 
 
         }
     }
-
-
-
     //animation functions
 
      animateMerge(swap_arr, speed) {
@@ -192,9 +199,37 @@ export default class SortingVisualizer extends React.Component {
         this.animateFullySorted(swap_arr.length*speed, speed);
         this.setState({isSorted: true});
         }
+
         
 
     }
+    animateHeap(swap_arr, speed){
+        if (this.state.isSorted){
+            this.animateFullySorted(0, speed);
+        }
+        else{
+            swap_arr.forEach(([i,j], index) => {
+            setTimeout(() => {
+                this.setState((prev) => {
+                    const array = [...prev.array]; //... copies the array instead of referring to the same array. NEVER mutate the state directly.
+                    [array[i], array[j]] = [array[j], array[i]];
+                    return { array, comparing: [i,j] };
+                });
+                
+            }, index*speed);
+           
+        });
+        //setTimeout(() => this.setState({comparing: []}), swap_arr.length * speed);
+        this.animateFullySorted(swap_arr.length*speed, speed);
+        this.setState({isSorted: true});
+        }
+        
+    }    
+
+
+
+
+
     animateFullySorted(delay, speed){
         const vel = 10
         setTimeout(()=> this.setState({comparing: []}), delay);
