@@ -1,61 +1,137 @@
 import React from "react";
 import "./SortingVisualizer.css";
-import {mergeSort, bubbleSort, heapSort, quickSort, selectionSort} from "./sortingAlgos"
+import { bubbleSort, heapSort, quickSort, selectionSort} from "./sortingAlgos";
+import {mergeSort} from "./mergeSortAlgo";
+
+
+
 export default class SortingVisualizer extends React.Component {
+    //state variables
     constructor(props){
         super(props);
         this.state = {
             array: [],
-            algorithm: 'bubble',
+            algorithm: 'merge', //default array on bootup
             comparing: [],
             pivot: -1,
             sorted: [],
+            isSorted: false,
         };
     }
-
+    //create array on bootup
     componentDidMount(){
         this.resetArray();
     }
 
+    //create new array
+
     resetArray(){
-        // const array = []
-        // for (let i = 0; i < 50; i++){
-        //     array.push(randomIntFromInterval(5, 500));
-        // }
-        // this.setState({array});
-        this.setState({array: generateRandomArray(), comparing: [], sorted: [], pivot: -1});
+        this.setState({array: generateRandomArray(), comparing: [], sorted: [], pivot: -1, isSorted: false});
     }
+    //calling sorting functions
     runSort(){
         switch (this.state.algorithm){
             case "merge": {
-                const sorted = mergeSort(this.state.array); 
-                console.log(sorted); 
-                break;}
-            case "bubble": {
-                // const sorted = this.animateBubble(bubbleSort(this.state.array)); 
-                // console.log(sorted);
-                const newArr = generateRandomArray();
-                this.setState({array: newArr, comparing: [], sorted: [], pivot: null});
-                this.animateBubble(bubbleSort(newArr));
-                break;}
-            case "heap": heapSort(this.state.array); break;
-            case "quick":{
-                const newArr = generateRandomArray();
-                this.setState({array: newArr, comparing: [], sorted: [], pivot: null});
-                this.animateQuickSort(quickSort(newArr));
+                const newArr = this.state.array
+                this.setState({array: newArr, comparing: [], sorted: [], pivot: null, ifSorted: true});
+
+                const startTime = performance.now()
+                const sorted_arr = mergeSort(newArr)
+                const endTime = performance.now()
+                console.log(`Merge Sort took ${endTime - startTime} ms`)
+
+                this.animateMerge(sorted_arr, 5)
                 break;
             }
-            case "selection":{
-                const newArr = generateRandomArray();
+
+            case "bubble": {
+                const newArr = this.state.array
                 this.setState({array: newArr, comparing: [], sorted: [], pivot: null});
-                this.animateBubble(selectionSort(newArr));
+
+                const startTime = performance.now()
+                const sorted_arr = bubbleSort(newArr)
+                const endTime = performance.now()
+                console.log(`Bubble Sort took ${endTime - startTime} ms`)
+
+                this.animateBubble(sorted_arr, 5);
                 break;
-            } 
+            }
+
+            case "quick":{
+                const newArr = this.state.array
+                this.setState({array: newArr, comparing: [], sorted: [], pivot: null});
+
+                const startTime = performance.now()
+                const sorted_arr = quickSort(newArr)
+                const endTime = performance.now()
+                console.log(`Quick Sort took ${endTime - startTime} ms`)
+
+                this.animateQuickSort(sorted_arr, 40);
+                break;
+            }
+
+            case "selection":{
+                const newArr = this.state.array
+                this.setState({array: newArr, comparing: [], sorted: [], pivot: null});
+                
+                const startTime = performance.now()
+                const sorted_arr = selectionSort(newArr)
+                const endTime = performance.now()
+                console.log(`Selection Sort took ${endTime - startTime} ms`)
+
+                this.animateSelection(sorted_arr, 30);
+                //console.log(`Sorted!`)
+                break;
+            }
+
+            case "heap": heapSort(this.state.array); break;
+
+
         }
     }
-    animateBubble(swap_arr){
-        const speed = 10
-        swap_arr.forEach(([i,j], index) => {
+
+
+
+    //animation functions
+
+     animateMerge(swap_arr, speed) {
+        if (this.state.isSorted){
+            this.animateFullySorted(0, speed);
+        }
+        else{
+            for (let i = 0; i < swap_arr.length; i++) {
+                const arrayBars = document.getElementsByClassName('array-bar');
+                const isColorChange = i % 3 !== 2;
+                if (isColorChange) {
+                    const [barOneIdx, barTwoIdx] = swap_arr[i];
+                    const barOneStyle = arrayBars[barOneIdx].style;
+                    const barTwoStyle = arrayBars[barTwoIdx].style;
+                    const color = i % 3 === 0 ? "Orange" : "Turquoise";
+                    setTimeout(() => {
+                        barOneStyle.backgroundColor = color;
+                        barTwoStyle.backgroundColor = color;
+                        }, i * speed);
+                } else {
+                    setTimeout(() => {
+                        const [barOneIdx, newHeight] = swap_arr[i];
+                        const barOneStyle = arrayBars[barOneIdx].style;
+                        barOneStyle.height = `${newHeight}px`;
+                        }, i * speed);
+                }
+
+            };
+            this.animateFullySorted(swap_arr.length*speed, speed);
+            this.setState({isSorted: true});
+        }
+        
+        
+    }
+    animateBubble(swap_arr, speed){
+        if (this.state.isSorted){
+            this.animateFullySorted(0, speed);
+        }
+        else{
+            swap_arr.forEach(([i,j], index) => {
             setTimeout(() => {
                 this.setState((prev) => {
                     const array = [...prev.array]; //... copies the array instead of referring to the same array. NEVER mutate the state directly.
@@ -67,12 +143,41 @@ export default class SortingVisualizer extends React.Component {
            
         });
         //setTimeout(() => this.setState({comparing: []}), swap_arr.length * speed);
-        this.animateFullySorted(swap_arr.length*speed);
+        this.animateFullySorted(swap_arr.length*speed, speed);
+        this.setState({isSorted: true});
+        }
+        
     }
 
-    animateQuickSort(swap_arr){
-        const speed = 15
-        swap_arr.forEach(([i,j,p], index) => {
+    animateSelection(swap_arr, speed){
+        if (this.state.isSorted){
+            this.animateFullySorted(0, speed);
+        }
+        else{
+            swap_arr.forEach(([i,j], index) => {
+            setTimeout(() => {
+                this.setState((prev) => {
+                    const array = [...prev.array]; //... copies the array instead of referring to the same array. NEVER mutate the state directly.
+                    [array[i], array[j]] = [array[j], array[i]];
+                    return { array, comparing: [i,j] };
+                });
+                
+            }, index*speed);
+           
+        });
+
+        this.animateFullySorted(swap_arr.length*speed, speed);
+        this.setState({isSorted: true});
+        }
+        
+    }
+
+    animateQuickSort(swap_arr, speed){
+        if (this.state.isSorted){
+            this.animateFullySorted(0, speed);
+        }
+        else{
+            swap_arr.forEach(([i,j,p], index) => {
             setTimeout(() => {
                 this.setState((prev) => {
                     const array = [...prev.array]; //... copies the array instead of referring to the same array. NEVER mutate the state directly.
@@ -83,19 +188,26 @@ export default class SortingVisualizer extends React.Component {
             }, index*speed);
            
         });
-        //setTimeout(() => this.setState({comparing: [], pivot: -1}), swap_arr.length * speed);
-        this.animateFullySorted(swap_arr.length*speed);
+
+        this.animateFullySorted(swap_arr.length*speed, speed);
+        this.setState({isSorted: true});
+        }
+        
 
     }
-    animateFullySorted(delay){
-        const speed = 10
+    animateFullySorted(delay, speed){
+        const vel = 10
         setTimeout(()=> this.setState({comparing: []}), delay);
         for (let i = 0; i < this.state.array.length; i++){
             setTimeout(()=> {
                 this.setState((prev) => ({sorted: [...prev.sorted, i]}));
-            }, delay + i * speed);
+            }, delay + i * vel);
         }
+
+        
     }
+
+    //render
     
     render(){
         const{array, comparing, pivot, sorted} = this.state;
@@ -137,6 +249,8 @@ export default class SortingVisualizer extends React.Component {
         </>)
     }
 }
+
+    //Helper Functions:
     function randomIntFromInterval(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }

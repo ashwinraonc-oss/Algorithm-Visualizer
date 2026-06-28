@@ -54,7 +54,6 @@
 
         }
         //return arr
-
         return animation
     }
     function partition(arr, low, high, animation){
@@ -81,6 +80,7 @@
 
     }
     export function selectionSort(arr){
+        const startTime = performance.now()
         let anime_arr = [];
         let arr_copy = [...arr]
         
@@ -94,6 +94,8 @@
             [arr_copy[i], arr_copy[min_idx]] = [arr_copy[min_idx], arr_copy[i]];
             anime_arr.push([i, min_idx]);
         }
+        const endTime = performance.now()
+        console.log(`Selection Sort took ${endTime - startTime} ms`)
         return anime_arr
 
     }
