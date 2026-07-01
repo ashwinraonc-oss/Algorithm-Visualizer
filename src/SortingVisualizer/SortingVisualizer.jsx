@@ -11,7 +11,7 @@ export default class SortingVisualizer extends React.Component {
         super(props);
         this.state = {
             array: [],
-            algorithm: 'merge', //default array on bootup
+            algorithm: 'bubble', //default array on bootup
             comparing: [],
             pivot: -1,
             sorted: [],
@@ -39,7 +39,7 @@ export default class SortingVisualizer extends React.Component {
                 const endTime = performance.now()
                 console.log(`Merge Sort took ${endTime - startTime} ms`)
 
-                this.animateMerge(sorted_arr, 35)
+                this.animateMerge(sorted_arr, 25)
                 break;
             }
 
@@ -240,11 +240,12 @@ export default class SortingVisualizer extends React.Component {
     render(){
         const{array, comparing, pivot, sorted} = this.state;
         let button_map = [
-            { id: 'merge', label: 'Merge Sort'}, 
-            { id: 'quick', label: 'Quick Sort'}, 
-            { id: 'heap', label: 'Heap Sort'}, 
+            { id: 'bubble', label: 'Bubble Sort'},
             { id: 'selection', label: 'Selection Sort'}, 
-            { id: 'bubble', label: 'Bubble Sort'}
+            { id: 'heap', label: 'Heap Sort'},
+            { id: 'quick', label: 'Quick Sort'},
+            { id: 'merge', label: 'Merge Sort'}, 
+            
         ]
         return(
             <>
@@ -264,26 +265,20 @@ export default class SortingVisualizer extends React.Component {
                     ></div>
                 ))}
             </div>
-
             <div className = "buttons">
-
-            
-
-            <div className = "sort_buttons">
-                {
-                button_map.map((item) => <button 
-                className = {this.state.algorithm === item.id ? "active":""}
-                key = {item.id} 
-                onClick={() => this.setState({algorithm: item.id, sorted: [], pivot: -1})}>{item.label}
-                </button>)
-                }
-            </div>
-            <div className = "run_buttons">
-                <button onClick={() => this.resetArray()}>New Array</button>
-                <button onClick={() => this.runSort(this.state.algorithm)}>Sort</button>
-            </div>
-            
-            
+                <div className = "sort_buttons">
+                    {
+                    button_map.map((item) => <button 
+                    className = {this.state.algorithm === item.id ? "active":""}
+                    key = {item.id} 
+                    onClick={() => this.setState({algorithm: item.id, sorted: [], pivot: -1})}>{item.label}
+                    </button>)
+                    }
+                </div>
+                <div className = "run_buttons">
+                    <button onClick={() => this.resetArray()}>New Array</button>
+                    <button onClick={() => this.runSort(this.state.algorithm)}>Sort</button>
+                </div>
             </div>
         </>)
     }
@@ -293,7 +288,7 @@ export default class SortingVisualizer extends React.Component {
     function randomIntFromInterval(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
-    function generateRandomArray(size = 25, min = 5, max = 400){
+    function generateRandomArray(size = 25, min = 10, max = 500){
         const local_array = [];
         for (let i = 0; i < size; i++){
             local_array.push(randomIntFromInterval(min, max));

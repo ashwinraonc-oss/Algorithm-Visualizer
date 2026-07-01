@@ -1,5 +1,5 @@
 *{
-    font-family: "Franklin Gothic Medium";
+    font-family: "Bahnschrift";
 }
 .array-bar {
     margin: 0 1px;
@@ -43,10 +43,10 @@ body {
     outline: none;
     background: none;
     appearance: none;
-    border-radius: 0.5rem;
+    border-radius: 0.3rem;
     background-color: transparent;
     font-size: 2rem;
-    font-weight: 400;
+    /* font-weight: 200px; */
     color:aliceblue;
 }
 .sort_buttons button span{
@@ -86,14 +86,14 @@ body {
 .run_buttons button{
     position: relative;
     border: 3px solid aliceblue;
-    transition: 0.4s ease-out;
+    transition: 0.2s ease-out;
     outline: none;
-    background-image: linear-gradient(to right, rgb(0, 0, 0) 50%, rgb(19, 216, 29) 50%);
+    background-image: linear-gradient(to right, rgb(0, 0, 0) 50%, orange 50%);
     background-size: 200%;
     appearance: none;
     border-radius: 0.5rem;
     font-size: 1.5rem;
-    font-weight: 400;
+    font-weight: 200;
     color:aliceblue;
 }
 .run_buttons{
