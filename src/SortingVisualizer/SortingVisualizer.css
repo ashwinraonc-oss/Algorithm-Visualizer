@@ -1,7 +1,11 @@
+*{
+    font-family: "OCR A Std";
+}
 .array-bar {
     margin: 0 1px;
     width: 50px;
-    background-color: rgb(0, 0, 0)
+    background-color: rgb(0, 0, 0);
+    transition: height 0.1s ease, background-color 0.1s ease;
 }
 .array-container{
     display: flex;
@@ -15,19 +19,84 @@
     width:100%;
     top: 10px;
     text-align:center;
+    /* border: none;
+    outline: none;
+    background: none; */
 }
 body {
   /* background-color: rgb(241, 240, 237); */
-  background-color: rgb(8, 8, 8);
+  background-color: rgb(12, 12, 12);
 }
 
 .sort_buttons{
     display: flex;
     gap: 10px;
     justify-content: center;
-
-
+    font-size: 1.25rem;
+    padding: 1rem 1.5rem;
+    
 }
-.active{
-    color: rgb(255, 0, 34);
+.sort_buttons button{
+    position: relative;
+    border: 3px solid aliceblue;
+    transition: 0.4s ease-out;
+    outline: none;
+    background: none;
+    appearance: none;
+    border-radius: 0.5rem;
+    background-color: transparent;
+    font-size: 2rem;
+    font-weight: 700;
+    color:aliceblue;
+}
+.sort_buttons button span{
+    position: relative;
+    z-index: 2;
+}
+.sort_buttons button::after{
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    width: calc(100% + 2rem);
+    height:  calc(100% + 2rem);
+    border: 3px rgb(224, 230, 219);
+    border-radius:0.5rem;
+    opacity: 0;
+    transition: 0.4s ease-out;
+}
+.sort_buttons button:hover{
+    color:rgb(98, 224, 176);
+    border-color: transparent;
+}
+.sort_buttons button:hover:after{
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    border-color:rgb(177, 69, 96);
+}
+
+.sort_buttons button.active,
+.sort_buttons button.active:hover{
+    color: rgb(98, 224, 176);
+    border-color: rgb(98, 224, 176);
+}
+.run_buttons button{
+    position: relative;
+    border: 3px solid aliceblue;
+    transition: 0.4s ease-out;
+    outline: none;
+    background-image: linear-gradient(to right, rgb(0, 0, 0) 50%, rgb(216, 59, 19) 50%);
+    background-size: 200%;
+    appearance: none;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color:aliceblue;
+}
+.run_buttons button:hover{
+    background-position: right;
+
 }

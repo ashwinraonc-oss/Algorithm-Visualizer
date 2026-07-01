@@ -39,7 +39,7 @@ export default class SortingVisualizer extends React.Component {
                 const endTime = performance.now()
                 console.log(`Merge Sort took ${endTime - startTime} ms`)
 
-                this.animateMerge(sorted_arr, 10)
+                this.animateMerge(sorted_arr, 35)
                 break;
             }
 
@@ -112,7 +112,7 @@ export default class SortingVisualizer extends React.Component {
                     const [barOneIdx, barTwoIdx] = swap_arr[i];
                     const barOneStyle = arrayBars[barOneIdx].style;
                     const barTwoStyle = arrayBars[barTwoIdx].style;
-                    const color = i % 3 === 0 ? "Red" : "White";
+                    const color = i % 3 === 0 ? "Crimson" : "White";
                     setTimeout(() => {
                         barOneStyle.backgroundColor = color;
                         barTwoStyle.backgroundColor = color;
@@ -121,7 +121,7 @@ export default class SortingVisualizer extends React.Component {
                     setTimeout(() => {
                         const [barOneIdx, newHeight] = swap_arr[i];
                         const barOneStyle = arrayBars[barOneIdx].style;
-                        barOneStyle.height = `${newHeight/1.2}px`;
+                        barOneStyle.height = `${newHeight/1}px`;
                         }, i * speed);
                 }
 
@@ -254,7 +254,7 @@ export default class SortingVisualizer extends React.Component {
                         className = "array-bar" 
                         key = {idx} 
                         style = {{
-                            height: `${value/1.2}px`,
+                            height: `${value/1}px`,
                             backgroundColor:
                                 sorted.includes(idx) ? "LawnGreen"
                                 : pivot === idx ? "#4790bb"
@@ -267,7 +267,7 @@ export default class SortingVisualizer extends React.Component {
 
             <div className = "buttons">
 
-            <button onClick={() => this.resetArray()}>New Array</button>
+            
 
             <div className = "sort_buttons">
                 {
@@ -278,8 +278,11 @@ export default class SortingVisualizer extends React.Component {
                 </button>)
                 }
             </div>
-
-            <button onClick={() => this.runSort(this.state.algorithm)}>Sort</button>
+            <div className = "run_buttons">
+                <button onClick={() => this.resetArray()}>New Array</button>
+                <button onClick={() => this.runSort(this.state.algorithm)}>Sort</button>
+            </div>
+            
             
             </div>
         </>)
@@ -290,7 +293,7 @@ export default class SortingVisualizer extends React.Component {
     function randomIntFromInterval(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
-    function generateRandomArray(size = 30, min = 5, max = 500){
+    function generateRandomArray(size = 25, min = 5, max = 400){
         const local_array = [];
         for (let i = 0; i < size; i++){
             local_array.push(randomIntFromInterval(min, max));
