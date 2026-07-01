@@ -1,5 +1,5 @@
 *{
-    font-family: "OCR A Std";
+    font-family: "Franklin Gothic Medium";
 }
 .array-bar {
     margin: 0 1px;
@@ -30,7 +30,7 @@ body {
 
 .sort_buttons{
     display: flex;
-    gap: 10px;
+    gap: 40px;
     justify-content: center;
     font-size: 1.25rem;
     padding: 1rem 1.5rem;
@@ -46,7 +46,7 @@ body {
     border-radius: 0.5rem;
     background-color: transparent;
     font-size: 2rem;
-    font-weight: 700;
+    font-weight: 400;
     color:aliceblue;
 }
 .sort_buttons button span{
@@ -68,7 +68,7 @@ body {
     transition: 0.4s ease-out;
 }
 .sort_buttons button:hover{
-    color:rgb(98, 224, 176);
+    color:lawngreen;
     border-color: transparent;
 }
 .sort_buttons button:hover:after{
@@ -80,23 +80,33 @@ body {
 
 .sort_buttons button.active,
 .sort_buttons button.active:hover{
-    color: rgb(98, 224, 176);
-    border-color: rgb(98, 224, 176);
+    color: lawngreen;
+    border-color: lawngreen;
 }
 .run_buttons button{
     position: relative;
     border: 3px solid aliceblue;
     transition: 0.4s ease-out;
     outline: none;
-    background-image: linear-gradient(to right, rgb(0, 0, 0) 50%, rgb(216, 59, 19) 50%);
+    background-image: linear-gradient(to right, rgb(0, 0, 0) 50%, rgb(19, 216, 29) 50%);
     background-size: 200%;
     appearance: none;
     border-radius: 0.5rem;
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-size: 1.5rem;
+    font-weight: 400;
     color:aliceblue;
+}
+.run_buttons{
+    position: fixed;
+    bottom: 30px;
+    left: 0;
+    width: 100%;
+    gap: 30px;
+    display: flex;
+    justify-content: center;
 }
 .run_buttons button:hover{
     background-position: right;
+    
 
 }
