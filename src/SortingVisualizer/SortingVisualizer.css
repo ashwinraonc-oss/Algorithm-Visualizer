@@ -110,3 +110,23 @@ body {
     
 
 }
+.info_panel{
+    position: relative;
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    font-size: 1.25rem;
+    padding: 1rem 1.5rem;
+    color:aliceblue;
+    top: -730px
+}
+.run_time{
+    position: relative;
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    font-size: 1.25rem;
+    padding: 1rem 1.5rem;
+    color:aliceblue;
+    top: -730px
+}
