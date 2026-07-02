@@ -3,8 +3,6 @@ import "./SortingVisualizer.css";
 import {bubbleSort, heapSort, quickSort, selectionSort} from "./sortingAlgos";
 import {mergeSort} from "./mergeSortAlgo";
 
-
-
 export default class SortingVisualizer extends React.Component {
     //state variables
     constructor(props){
@@ -16,7 +14,7 @@ export default class SortingVisualizer extends React.Component {
             pivot: -1,
             sorted: [],
             isSorted: false,
-            avg_run: {
+            avg_run: { //tracking average of all runs per algorithm
                 'bubble' : [],
                 'merge' : [],
                 'selection' : [],
@@ -24,6 +22,13 @@ export default class SortingVisualizer extends React.Component {
                 'heap' : [],
             },
             runtime: 0,
+            runs_arr:{ //tracking numbers of runs
+                'bubble' : 0,
+                'merge' : 0,
+                'selection' : 0,
+                'quick' : 0,
+                'heap' : 0,
+            }
         };
     }
     //create array on bootup
@@ -40,21 +45,34 @@ export default class SortingVisualizer extends React.Component {
         switch (algo){
             case "merge": {
                 const newArr = this.state.array
-                
+
                 this.setState({array: newArr, comparing: [], sorted: [], pivot: null});
+
+                if (this.state.isSorted == false){
+                    this.setState(prev => ({
+                    runs_arr: {
+                        ...prev.runs_arr,
+                        [this.state.algorithm]: prev.runs_arr[this.state.algorithm] + 1
+                    }
+                }))
 
                 let bigArr = generateRandomArray(3000, 10, 500)
                 const startTime = performance.now()
-                let big_sorted_arr = mergeSort(bigArr)
+                mergeSort(bigArr)
                 const endTime = performance.now()
-
-                const sorted_arr = mergeSort(newArr)
                 let ranIn = endTime - startTime;
                 let temp_arr = [...this.state.avg_run['merge'] ,ranIn];
                 this.setState({runtime: average(temp_arr)});
                 this.setState({avg_run: {...this.state.avg_run, 'merge': temp_arr}});
+                }
 
-                console.log(`Merge Sort took ${endTime - startTime} ms`)
+                
+
+                const sorted_arr = mergeSort(newArr)
+
+
+
+                //console.log(`Merge Sort took ${endTime - startTime} ms`)
 
                 
                 this.animateMerge(sorted_arr, 25)
@@ -65,18 +83,30 @@ export default class SortingVisualizer extends React.Component {
                 const newArr = this.state.array
                 this.setState({array: newArr, comparing: [], sorted: [], pivot: null});
 
+
+                if (this.state.isSorted == false){
+                    this.setState(prev => ({
+                    runs_arr: {
+                        ...prev.runs_arr,
+                        [this.state.algorithm]: prev.runs_arr[this.state.algorithm] + 1
+                    }
+                }))
                 let bigArr = generateRandomArray(3000, 10, 500)
                 const startTime = performance.now()
-                let big_sorted_arr = bubbleSort(bigArr)
+                bubbleSort(bigArr)
                 const endTime = performance.now()
-
-                const sorted_arr = bubbleSort(newArr)
                 let ranIn = endTime - startTime;
                 let temp_arr = [...this.state.avg_run['bubble'] ,ranIn];
                 this.setState({runtime: average(temp_arr)});
                 this.setState({avg_run: {...this.state.avg_run, 'bubble': temp_arr}});
 
-                console.log(`Bubble Sort took ${endTime - startTime} ms`)
+                }
+
+
+                const sorted_arr = bubbleSort(newArr)
+
+
+                //console.log(`Bubble Sort took ${endTime - startTime} ms`)
 
 
                 this.animateBubble(sorted_arr, 30);
@@ -87,18 +117,29 @@ export default class SortingVisualizer extends React.Component {
                 const newArr = this.state.array
                 this.setState({array: newArr, comparing: [], sorted: [], pivot: null});
 
-                let bigArr = generateRandomArray(3000, 10, 500)
+                if (this.state.isSorted == false){
+                    this.setState(prev => ({
+                    runs_arr: {
+                        ...prev.runs_arr,
+                        [this.state.algorithm]: prev.runs_arr[this.state.algorithm] + 1
+                    }
+                }))
                 const startTime = performance.now()
-                let big_sorted_arr = mergeSort(bigArr)
+                let bigArr = generateRandomArray(3000, 10, 500)
+                quickSort(bigArr)
                 const endTime = performance.now()
-
-                const sorted_arr = quickSort(newArr)
                 let ranIn = endTime - startTime;
                 let temp_arr = [...this.state.avg_run['quick'] ,ranIn];
                 this.setState({runtime: average(temp_arr)});
                 this.setState({avg_run: {...this.state.avg_run, 'quick': temp_arr}});
 
-                console.log(`Quick Sort took ${endTime - startTime} ms`)
+                }
+
+
+                const sorted_arr = quickSort(newArr)
+
+
+                //console.log(`Quick Sort took ${endTime - startTime} ms`)
 
 
                 this.animateQuickSort(sorted_arr, 100);
@@ -109,18 +150,30 @@ export default class SortingVisualizer extends React.Component {
                 const newArr = this.state.array
                 this.setState({array: newArr, comparing: [], sorted: [], pivot: null});
                 
+
+                if (this.state.isSorted == false){
+                    this.setState(prev => ({
+                    runs_arr: {
+                        ...prev.runs_arr,
+                        [this.state.algorithm]: prev.runs_arr[this.state.algorithm] + 1
+                    }
+                }))
+
                 let bigArr = generateRandomArray(3000, 10, 500)
                 const startTime = performance.now()
-                let big_sorted_arr = selectionSort(bigArr)
+                selectionSort(bigArr)
                 const endTime = performance.now()
-
-                const sorted_arr = selectionSort(newArr)
                 let ranIn = endTime - startTime;
                 let temp_arr = [...this.state.avg_run['selection'] ,ranIn];
                 this.setState({runtime: average(temp_arr)});
                 this.setState({avg_run: {...this.state.avg_run, 'selection': temp_arr}});
+                
 
-                console.log(`Selection Sort took ${endTime - startTime} ms`)
+                }
+                const sorted_arr = selectionSort(newArr)
+
+
+                //console.log(`Selection Sort took ${endTime - startTime} ms`)
 
                 this.animateSelection(sorted_arr, 100);
                 break;
@@ -130,22 +183,29 @@ export default class SortingVisualizer extends React.Component {
                 const newArr = this.state.array
                 this.setState({array: newArr, comparing: [], sorted: [], pivot: null});
                 
-                let bigArr = generateRandomArray(3000, 10, 500)
-                const startTime = performance.now()
-                let big_sorted_arr = heapSort(bigArr)
-                const endTime = performance.now()
 
-                const sorted_arr = heapSort(newArr)
+                
+                if (this.state.isSorted == false){
+                    this.setState(prev => ({
+                    runs_arr: {
+                        ...prev.runs_arr,
+                        [this.state.algorithm]: prev.runs_arr[this.state.algorithm] + 1
+                    }
+                }))
+                const startTime = performance.now()
+                let bigArr = generateRandomArray(3000, 10, 500)
+                heapSort(bigArr)
+                const endTime = performance.now()
                 let ranIn = endTime - startTime;
                 let temp_arr = [...this.state.avg_run['heap'] ,ranIn];
                 this.setState({runtime: average(temp_arr)});
                 this.setState({avg_run: {...this.state.avg_run, 'heap': temp_arr}});
-
-                console.log(`Heap Sort took ${endTime - startTime} ms`)
+                
+                }
+                const sorted_arr = heapSort(newArr)
+                //console.log(`Heap Sort took ${endTime - startTime} ms`)
 
                 this.animateHeap(sorted_arr, 50);
-
-
                 break;                
             }
 
@@ -334,13 +394,20 @@ export default class SortingVisualizer extends React.Component {
                 <div className = "run_buttons">
                     <button onClick={() => this.resetArray()}>New Array</button>
                     <button onClick={() => this.runSort(this.state.algorithm)}>Sort</button>
+                    <button onClick={() => this.setState({avg_run: {'bubble' : [],'merge' : [],'selection' : [],'quick' : [],'heap' : [],}, runtime: 0, runs_arr:{'bubble' : 0,'merge' : 0,'selection' : 0,'quick' : 0,'heap' : 0,}})}>Reset</button>
                 </div>
             </div>
             <div className = "info_panel">
                 <div className = "time_complexity">Time Complexity: {infoVar.time}</div>
                 <div className = "space_complexity">Space Complexity: {infoVar.space}</div>
             </div>
-            <div className = "run_time">Average Run Time (n = 3000): {this.state.runtime} ms</div>
+            <div className = "run_time">
+                <div>Average Run Time (n = 3000): {this.state.runtime} ms</div>
+                <div>Runs: {this.state.runs_arr[this.state.algorithm]}</div>
+                
+                
+            </div>
+
         </>)
     }
 }
@@ -368,11 +435,4 @@ export default class SortingVisualizer extends React.Component {
         }
         return sum/arr.length;
     }
-    function runThousand(arr){
-        for (let i = 0; i < 1000; i++){
-            
-
-        }
-    }
-
 
