@@ -3,6 +3,8 @@ import "./SortingVisualizer.css";
 import {bubbleSort, heapSort, quickSort, selectionSort} from "./sortingAlgos";
 import {mergeSort} from "./mergeSortAlgo";
 
+const array_size = 3000;
+
 export default class SortingVisualizer extends React.Component {
     //state variables
     constructor(props){
@@ -56,7 +58,7 @@ export default class SortingVisualizer extends React.Component {
                     }
                 }))
 
-                let bigArr = generateRandomArray(3000, 10, 500)
+                let bigArr = generateRandomArray(array_size, 10, 500)
                 const startTime = performance.now()
                 mergeSort(bigArr)
                 const endTime = performance.now()
@@ -69,8 +71,6 @@ export default class SortingVisualizer extends React.Component {
                 
 
                 const sorted_arr = mergeSort(newArr)
-
-
 
                 //console.log(`Merge Sort took ${endTime - startTime} ms`)
 
@@ -91,7 +91,7 @@ export default class SortingVisualizer extends React.Component {
                         [this.state.algorithm]: prev.runs_arr[this.state.algorithm] + 1
                     }
                 }))
-                let bigArr = generateRandomArray(3000, 10, 500)
+                let bigArr = generateRandomArray(array_size, 10, 500)
                 const startTime = performance.now()
                 bubbleSort(bigArr)
                 const endTime = performance.now()
@@ -125,7 +125,7 @@ export default class SortingVisualizer extends React.Component {
                     }
                 }))
                 const startTime = performance.now()
-                let bigArr = generateRandomArray(3000, 10, 500)
+                let bigArr = generateRandomArray(array_size, 10, 500)
                 quickSort(bigArr)
                 const endTime = performance.now()
                 let ranIn = endTime - startTime;
@@ -159,7 +159,7 @@ export default class SortingVisualizer extends React.Component {
                     }
                 }))
 
-                let bigArr = generateRandomArray(3000, 10, 500)
+                let bigArr = generateRandomArray(array_size, 10, 500)
                 const startTime = performance.now()
                 selectionSort(bigArr)
                 const endTime = performance.now()
@@ -193,7 +193,7 @@ export default class SortingVisualizer extends React.Component {
                     }
                 }))
                 const startTime = performance.now()
-                let bigArr = generateRandomArray(3000, 10, 500)
+                let bigArr = generateRandomArray(array_size, 10, 500)
                 heapSort(bigArr)
                 const endTime = performance.now()
                 let ranIn = endTime - startTime;
@@ -404,9 +404,8 @@ export default class SortingVisualizer extends React.Component {
             <div className = "run_time">
                 <div>Average Run Time (n = 3000): {this.state.runtime} ms</div>
                 <div>Runs: {this.state.runs_arr[this.state.algorithm]}</div>
-                
-                
             </div>
+            <div className = "title">Sorting Algorithm Visualizer</div>
 
         </>)
     }

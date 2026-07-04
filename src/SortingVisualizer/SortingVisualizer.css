@@ -1,5 +1,18 @@
+@import url('https://googleapis.com');
+
 *{
-    font-family: "Bahnschrift";
+    /* font-family: "Bahnschrift"; */
+    /* font-family: 'Josefin Sans', sans-serif; */
+    font-family: 'Poppins', sans-serif;
+}
+.title{
+    position: relative;
+    font-size: 3rem;
+    font-weight: 500;
+    color: rgb(0, 255, 34);
+    top: -900px;
+    font-family: 'Ranade', sans-serif;
+    
 }
 .array-bar {
     margin: 0 1px;
@@ -17,7 +30,7 @@
 .buttons{
     position:fixed;
     width:100%;
-    top: 10px;
+    top: 60px;
     text-align:center;
     /* border: none;
     outline: none;
@@ -118,7 +131,7 @@ body {
     font-size: 1.25rem;
     padding: 1rem 1.5rem;
     color:aliceblue;
-    top: -730px
+    top: -675px
 }
 .run_time{
     position: relative;
@@ -128,5 +141,5 @@ body {
     font-size: 1.25rem;
     padding: 1rem 1.5rem;
     color:aliceblue;
-    top: -750px
+    top: -680px
 }
