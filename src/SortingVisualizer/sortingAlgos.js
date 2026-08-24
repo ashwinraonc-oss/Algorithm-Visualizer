@@ -28,7 +28,7 @@
         let flag = true
         let arr_copy = [...arr]
         let animation_arr = []
-        while (flag == true){
+        while (flag === true){
             flag = false
             for (let i = 1; i < arr_copy.length; i++){
                 if (arr_copy[i] < arr_copy[i-1]){
@@ -127,7 +127,7 @@
         if (right < n && arr_copy[right] > arr_copy[largest]){
             largest = right
         }
-        if (largest != index){
+        if (largest !== index){
             [arr_copy[index], arr_copy[largest]] = [arr_copy[largest], arr_copy[index]];
             animation_arr.push([index, largest])
             max_heapify(arr_copy, largest, n, animation_arr)

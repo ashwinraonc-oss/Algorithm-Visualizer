@@ -50,7 +50,7 @@ export default class SortingVisualizer extends React.Component {
 
                 this.setState({array: newArr, comparing: [], sorted: [], pivot: null});
 
-                if (this.state.isSorted == false){
+                if (this.state.isSorted === false){
                     this.setState(prev => ({
                     runs_arr: {
                         ...prev.runs_arr,
@@ -84,7 +84,7 @@ export default class SortingVisualizer extends React.Component {
                 this.setState({array: newArr, comparing: [], sorted: [], pivot: null});
 
 
-                if (this.state.isSorted == false){
+                if (this.state.isSorted === false){
                     this.setState(prev => ({
                     runs_arr: {
                         ...prev.runs_arr,
@@ -117,7 +117,7 @@ export default class SortingVisualizer extends React.Component {
                 const newArr = this.state.array
                 this.setState({array: newArr, comparing: [], sorted: [], pivot: null});
 
-                if (this.state.isSorted == false){
+                if (this.state.isSorted === false){
                     this.setState(prev => ({
                     runs_arr: {
                         ...prev.runs_arr,
@@ -151,7 +151,7 @@ export default class SortingVisualizer extends React.Component {
                 this.setState({array: newArr, comparing: [], sorted: [], pivot: null});
                 
 
-                if (this.state.isSorted == false){
+                if (this.state.isSorted === false){
                     this.setState(prev => ({
                     runs_arr: {
                         ...prev.runs_arr,
@@ -185,7 +185,7 @@ export default class SortingVisualizer extends React.Component {
                 
 
                 
-                if (this.state.isSorted == false){
+                if (this.state.isSorted === false){
                     this.setState(prev => ({
                     runs_arr: {
                         ...prev.runs_arr,
@@ -206,10 +206,11 @@ export default class SortingVisualizer extends React.Component {
                 //console.log(`Heap Sort took ${endTime - startTime} ms`)
 
                 this.animateHeap(sorted_arr, 50);
-                break;                
+                break;
             }
 
-
+            default:
+                break;
         }
     }
     //animation functions
@@ -424,7 +425,7 @@ export default class SortingVisualizer extends React.Component {
 
     }
     function average(arr){
-        if (arr.length == 0){
+        if (arr.length === 0){
             return 0
 
         }
