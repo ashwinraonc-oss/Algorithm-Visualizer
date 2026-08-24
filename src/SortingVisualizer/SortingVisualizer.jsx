@@ -395,7 +395,7 @@ export default class SortingVisualizer extends React.Component {
                 <div className = "run_buttons">
                     <button onClick={() => this.resetArray()}>New Array</button>
                     <button onClick={() => this.runSort(this.state.algorithm)}>Sort</button>
-                    <button onClick={() => this.setState({avg_run: {'bubble' : [],'merge' : [],'selection' : [],'quick' : [],'heap' : [],}, runtime: 0, runs_arr:{'bubble' : 0,'merge' : 0,'selection' : 0,'quick' : 0,'heap' : 0,}})}>Reset</button>
+                    <button onClick={() => this.setState({avg_run: {'bubble' : [],'merge' : [],'selection' : [],'quick' : [],'heap' : [],}, runtime: 0, runs_arr:{'bubble' : 0,'merge' : 0,'selection' : 0,'quick' : 0,'heap' : 0,}})}>Reset Stats</button>
                 </div>
             </div>
             <div className = "info_panel">
